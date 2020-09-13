@@ -70,6 +70,7 @@
             this.Controls.Add(this.label1);
             this.Name = "Form2";
             this.Text = "Form2";
+            this.TopMost = true;
             this.ResumeLayout(false);
             this.PerformLayout();
 

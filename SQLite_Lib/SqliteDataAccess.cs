@@ -25,7 +25,7 @@ namespace SQLiteLib
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
-                cnn.Execute("INSERT into Awarie(Tester, Start, InterventionStart, Stop, TypeOfIssue, RootCause) values (@Tester, @Start, @InterventionSTart, @Stop, @TypeOfIssue, @RootCause)", problem);
+                cnn.Execute("INSERT into Awarie(Tester, Start, InterventionStart, Stop, Downtime, TypeOfIssue, RootCause, Technician) values (@Tester, @Start, @InterventionSTart, @Stop, @Downtime, @TypeOfIssue, @RootCause, @TechnicianID)", problem);
             }
         }
 

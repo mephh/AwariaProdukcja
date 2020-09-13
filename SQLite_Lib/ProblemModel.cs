@@ -19,6 +19,8 @@ namespace SQLiteLib
 
         public string technicianID { get; set; }
 
+        public TimeSpan Downtime { get; set; }
+
         public string TesterIssue
         {
             get

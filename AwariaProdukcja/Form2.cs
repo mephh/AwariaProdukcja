@@ -12,21 +12,21 @@ namespace AwariaProdukcja
 {
     public partial class Form2 : Form
     {
+        public static string UserID { get; set; }
+
         public Form2()
         {
             InitializeComponent();
         }
 
-        public string TechnicianID { get; set; }
-
         private void button1_Click(object sender, EventArgs e)
         {
             if (textBox1.Text != "")
             {
-                TechnicianID = textBox1.Text;
+                UserID = textBox1.Text;
+                DialogResult = DialogResult.OK;
                 Close();
             }
-            
         }
     }
 }
