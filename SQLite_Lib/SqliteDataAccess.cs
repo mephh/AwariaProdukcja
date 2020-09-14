@@ -25,11 +25,20 @@ namespace SQLiteLib
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
-                cnn.Execute("INSERT into Awarie(Tester, Start, InterventionStart, Stop, Downtime, TypeOfIssue, RootCause, Technician) values (@Tester, @Start, @InterventionSTart, @Stop, @Downtime, @TypeOfIssue, @RootCause, @TechnicianID)", problem);
+                cnn.Execute("INSERT into Testers(Tester, Start, InterventionStart, Stop, Downtime, TypeOfIssue, RootCause, Technician) values (@Tester, @Start, @InterventionSTart, @Stop, @Downtime, @TypeOfIssue, @RootCause, @TechnicianID)", problem);
             }
         }
 
-        private static string LoadConnectionString(string id = "Default")
+        public static void SaveProblemSQL(ProblemModel problem)
+        {
+            using (IDbConnection cnn = new System.Data.SqlClient.SqlConnection(LoadConnectionString()))
+            {
+                cnn.Open();
+                cnn.Execute("INSERT into Testers(Tester, Start, InterventionStart, Stop, Downtime, TypeOfIssue, RootCause, Technician) values (@Tester, @Start, @InterventionSTart, @Stop, @Downtime, @TypeOfIssue, @RootCause, @TechnicianID)", problem);
+            }
+        }
+
+        private static string LoadConnectionString(string id = "ReportsDB")
         {
             return ConfigurationManager.ConnectionStrings[id].ConnectionString;
         }

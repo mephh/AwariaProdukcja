@@ -11,7 +11,8 @@ namespace AwariaProdukcja
     {
         public string _tID { get; private set; }
         public static DateTime _start { get; set; }
-        public string errorFilePath { get { return @"\\kit-grd-fs01\backtst\Install\AwariaProd\errors.txt"; } }
+        //public static string commonFolder = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+        public string errorFilePath { get { return @"C:\Users\Public\Documents\AwariaProd_Errors.txt"; } }
 
         public Form1()
         {
@@ -22,7 +23,7 @@ namespace AwariaProdukcja
         {
             ResetControls();
             CheckIfFilesExist();
-            Debug.Assert(File.Exists(@"X:\Install\AwariaProd\Awaria.db"));
+            //Debug.Assert(File.Exists(@"X:\Install\AwariaProd\Awaria.db"));
         }
 
         private void CheckIfFilesExist()
@@ -35,13 +36,13 @@ namespace AwariaProdukcja
                 }
                 catch
                 {
-                    MessageBox.Show("BRAK UPRAWNIEN DO UTWORZENIA PLIKU W FOLDERZE: " + errorFilePath);
+                    MessageBox.Show("BRAK UPRAWNIEN DO UTWORZENIA PLIKU W FOLDERZE Z PROGRAMEM");
                 }
             }
-            if (!File.Exists(@"X:\Install\AwariaProd\Awaria.db"))
-            {
-                MessageBox.Show(@"ZMAPUJ FOLDER \\kit-grd-fs01\backtst\ JAKO X:\");
-            }
+            //if (!File.Exists(@"X:\Install\AwariaProd\Awaria.db"))
+            //{
+            //    MessageBox.Show(@"ZMAPUJ FOLDER \\kit-grd-fs01\backtst\ JAKO X:\");
+            //}
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -107,11 +108,11 @@ namespace AwariaProdukcja
                     pm.technicianID = _tID;
                     try
                     {
-                        SqliteDataAccess.SaveProblem(pm);
+                        SqliteDataAccess.SaveProblemSQL(pm);
                     }
                     catch (Exception exc)
                     {
-                        MessageBox.Show("BRAK POLACZENIA Z BAZA DANYCH. SPRAWDZ CZY PLIK ISTNIEJE");
+                        MessageBox.Show("BRAK POLACZENIA Z BAZA DANYCH. SPRAWDZ CZY MASZ POLACZENIE Z SERWEREM.");
                         Error2txt(errorFilePath, exc.ToString());
                     }
                     ResetControls();
