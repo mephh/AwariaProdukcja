@@ -1,33 +1,79 @@
-﻿using SQLiteLib;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.IO;
 using System.Text;
+using Microsoft.Win32;
+using SQLLib;
+using System.Threading.Tasks;
 
 namespace AwariaProdukcja
 {
     public partial class Form1 : Form
     {
+        //used in form 2 and 3
         public string _tID { get; private set; }
+        public string _oID { get; private set; }
+        //used for calcualting downtime
         public static DateTime _start { get; set; }
-        //public static string commonFolder = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+
         public string errorFilePath { get { return @"C:\Users\Public\Documents\AwariaProd_Errors.txt"; } }
+        private string datetimeFormat = "yyyy-MM-dd HH:mm:ss"; //must be done cause of different date formats on stations
 
         public Form1()
         {
             InitializeComponent();
         }
-        
+
         private void Form1_Load(object sender, EventArgs e)
         {
             ResetControls();
             CheckIfFilesExist();
-            //Debug.Assert(File.Exists(@"X:\Install\AwariaProd\Awaria.db"));
+            //make sure app is added to autostart
+            RunAtStartUp();
+            label1.Text += Environment.MachineName;
+            LogOperator();
+            Task task = Task.Run((Action)CompareIdleTime);
+        }
+
+        private void LogOutOperator()
+        {
+            label8.Text = "Zalogowany operator: "; //reset label
+            _oID = null;
+            this.Hide(); //hide main app window
+            LogOperator();
+        }
+
+        private void LogOperator()
+        {
+            Form3 operatorDialog = new Form3();
+            operatorDialog.StartPosition = FormStartPosition.CenterParent;
+            // Show testDialog as a modal dialog and determine if DialogResult = OK.
+            if (operatorDialog.ShowDialog() == DialogResult.OK)
+            {
+                _oID = Form3.OperatorID;
+            }
+            else
+            {
+                _oID = null;
+            }
+            operatorDialog.Dispose();
+            label8.Text += _oID; //logged operator
+            this.Show(); //unhide main window
+        }
+
+        private void RunAtStartUp()
+        {
+            //ADD to AUTOSTART
+            RegistryKey rkApp = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+            if (rkApp.GetValue("AwariaProdukcja") == null)
+            {
+                rkApp.SetValue("AwariaProdukcja", Application.ExecutablePath);
+            }
         }
 
         private void CheckIfFilesExist()
-        {
+        {   //try to create error file, in future will be exchanged for email send method
             if (!File.Exists(errorFilePath))
             {
                 try
@@ -36,31 +82,28 @@ namespace AwariaProdukcja
                 }
                 catch
                 {
-                    MessageBox.Show("BRAK UPRAWNIEN DO UTWORZENIA PLIKU W FOLDERZE Z PROGRAMEM");
+                    MessageBox.Show("BRAK UPRAWNIEN DO UTWORZENIA PLIKU ERRORS W FOLDERZE Z PROGRAMEM");
                 }
             }
-            //if (!File.Exists(@"X:\Install\AwariaProd\Awaria.db"))
-            //{
-            //    MessageBox.Show(@"ZMAPUJ FOLDER \\kit-grd-fs01\backtst\ JAKO X:\");
-            //}
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            //Start AWARIA
             _start = DateTime.Now;
-            label4.Text = _start.ToString();
+            label4.Text = _start.ToString(datetimeFormat);
             label4.Visible = true;
-            button1.Visible = false;
+            button1.Visible = false; //hide awaria button so others are visible
         }
 
         private void button2_Click(object sender, EventArgs e)
-        {
+        {   //ANULUJ
             ResetControls();
         }
 
         private void button3_Click(object sender, EventArgs e)
-        {
-            label6.Text = DateTime.Now.ToString();
+        {   //ROZPOCZNIJ INTERWENCJE
+            label6.Text = DateTime.Now.ToString(datetimeFormat);
             label6.Visible = true;
             textBox2.Visible = true;
             button4.Visible = true;
@@ -88,27 +131,27 @@ namespace AwariaProdukcja
         }
 
         private void button4_Click(object sender, EventArgs e)
-        {
+        {   //ZAMKNIJ INTERWENCJE
             if (textBox2.Text != "" && comboBox1.Text != "")
             {
-                AskForID();
+                AskForID(); //ASK FOR TECHNICIAN ID
                 Debug.Assert(_tID != null);
-                if( _tID != null)
+                if (_tID != null)
                 {
-                    
+                    //build sql query 
                     ProblemModel pm = new ProblemModel();
-                    pm.Tester = textBox1.Text;
-                    pm.Tester = Environment.MachineName;
-                    pm.Start = label4.Text;
-                    pm.InterventionStart = label6.Text;
-                    pm.Stop = DateTime.Now.ToString();
+                    pm.Tester = label1.Text.Substring(label1.Text.IndexOf(':'));
+                    pm.Start = label4.Text; //conv string
+                    pm.InterventionStart = label6.Text; //conv string
+                    pm.Stop = DateTime.Now.ToString(datetimeFormat); //conv string
                     pm.Downtime = DateTime.Now.Subtract(_start);
                     pm.TypeOfIssue = comboBox1.Text;
                     pm.RootCause = textBox2.Text;
                     pm.technicianID = _tID;
+                    pm.LoggedOperator = _oID;
                     try
                     {
-                        SqliteDataAccess.SaveProblemSQL(pm);
+                        SqlDataAccess.SaveProblemSQL(pm);
                     }
                     catch (Exception exc)
                     {
@@ -140,9 +183,26 @@ namespace AwariaProdukcja
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("Tester: " + Environment.MachineName + ", Czas wystapienia:" + DateTime.Now + ", Blad wykonywania funkcji" + this.ToString() + ", Kod bledu: " + errorCode);
-            using(StreamWriter sw = new StreamWriter(errorFile, true))
+            using (StreamWriter sw = new StreamWriter(errorFile, true))
             {
                 sw.WriteLine(sb);
+            }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            LogOutOperator();
+        }
+
+        private void CompareIdleTime()
+        {
+            while (true)
+            {
+                if (WinApi.GetIdleTime() > 2000)
+                {
+                    LogOutOperator();
+                    break;
+                }
             }
         }
     }

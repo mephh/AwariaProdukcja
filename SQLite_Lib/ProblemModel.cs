@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace SQLiteLib
+namespace SQLLib
 {
     public class ProblemModel
     {
@@ -21,13 +21,7 @@ namespace SQLiteLib
 
         public TimeSpan Downtime { get; set; }
 
-        public string TesterIssue
-        {
-            get
-            {
-                return $"{ Tester } { RootCause }";
-            }
-        }
+        public string LoggedOperator { get; set; }
 
     }
 }

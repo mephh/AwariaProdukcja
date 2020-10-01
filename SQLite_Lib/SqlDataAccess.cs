@@ -4,34 +4,26 @@ using System.Text;
 using System.Configuration;
 using System.Data;
 using System.Data.SQLite;
+using System.Data.SqlClient;
 using System.Linq;
 using Dapper;
 
-namespace SQLiteLib
+namespace SQLLib
 {
-    public class SqliteDataAccess
+    public class SqlDataAccess
     {
         public static List<ProblemModel> LoadProblems()
         {
-            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+            using (SqlConnection cnn = new SqlConnection(LoadConnectionString()))
             {
                 var output = cnn.Query<ProblemModel>("SELECT * FROM Awarie", new DynamicParameters());
                 return output.ToList();
             }
-            return null;
         }
         
-        public static void SaveProblem(ProblemModel problem)
-        {
-            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
-            {
-                cnn.Execute("INSERT into Testers(Tester, Start, InterventionStart, Stop, Downtime, TypeOfIssue, RootCause, Technician) values (@Tester, @Start, @InterventionSTart, @Stop, @Downtime, @TypeOfIssue, @RootCause, @TechnicianID)", problem);
-            }
-        }
-
         public static void SaveProblemSQL(ProblemModel problem)
         {
-            using (IDbConnection cnn = new System.Data.SqlClient.SqlConnection(LoadConnectionString()))
+            using (SqlConnection cnn = new System.Data.SqlClient.SqlConnection(LoadConnectionString()))
             {
                 cnn.Open();
                 cnn.Execute("INSERT into Testers(Tester, Start, InterventionStart, Stop, Downtime, TypeOfIssue, RootCause, Technician) values (@Tester, @Start, @InterventionSTart, @Stop, @Downtime, @TypeOfIssue, @RootCause, @TechnicianID)", problem);
