@@ -6,6 +6,7 @@ using System.Text;
 using Microsoft.Win32;
 using SQLLib;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace AwariaProdukcja
 {
@@ -13,7 +14,9 @@ namespace AwariaProdukcja
     {
         //used in form 2 and 3
         public string _tID { get; private set; }
-        public string _oID { get; private set; }
+        private List<string> technicians = new List<string>(){
+            "123", "1234", "1015"
+        };
         //used for calcualting downtime
         public static DateTime _start { get; set; }
 
@@ -31,35 +34,9 @@ namespace AwariaProdukcja
             CheckIfFilesExist();
             //make sure app is added to autostart
             RunAtStartUp();
-            label1.Text += Environment.MachineName;
-            LogOperator();
-            Task task = Task.Run((Action)CompareIdleTime);
-        }
+            lblTester.Text += Environment.MachineName;
+            lblUser.Text += Environment.UserName;
 
-        private void LogOutOperator()
-        {
-            label8.Text = "Zalogowany operator: "; //reset label
-            _oID = null;
-            this.Hide(); //hide main app window
-            LogOperator();
-        }
-
-        private void LogOperator()
-        {
-            Form3 operatorDialog = new Form3();
-            operatorDialog.StartPosition = FormStartPosition.CenterParent;
-            // Show testDialog as a modal dialog and determine if DialogResult = OK.
-            if (operatorDialog.ShowDialog() == DialogResult.OK)
-            {
-                _oID = Form3.OperatorID;
-            }
-            else
-            {
-                _oID = null;
-            }
-            operatorDialog.Dispose();
-            label8.Text += _oID; //logged operator
-            this.Show(); //unhide main window
         }
 
         private void RunAtStartUp()
@@ -134,13 +111,15 @@ namespace AwariaProdukcja
         {   //ZAMKNIJ INTERWENCJE
             if (textBox2.Text != "" && comboBox1.Text != "")
             {
-                AskForID(); //ASK FOR TECHNICIAN ID
+                while (!technicians.Contains(_tID)){
+                    AskForID(); //ASK FOR TECHNICIAN ID
+                }
                 Debug.Assert(_tID != null);
                 if (_tID != null)
                 {
                     //build sql query 
                     ProblemModel pm = new ProblemModel();
-                    pm.Tester = label1.Text.Substring(label1.Text.IndexOf(':'));
+                    pm.Tester = lblTester.Text.Substring(lblTester.Text.IndexOf(':'));
                     pm.Start = label4.Text; //conv string
                     pm.InterventionStart = label6.Text; //conv string
                     pm.Stop = DateTime.Now.ToString(datetimeFormat); //conv string
@@ -148,7 +127,7 @@ namespace AwariaProdukcja
                     pm.TypeOfIssue = comboBox1.Text;
                     pm.RootCause = textBox2.Text;
                     pm.technicianID = _tID;
-                    pm.LoggedOperator = _oID;
+                    pm.LoggedOperator = Environment.UserName;
                     try
                     {
                         SqlDataAccess.SaveProblemSQL(pm);
@@ -189,21 +168,9 @@ namespace AwariaProdukcja
             }
         }
 
-        private void button5_Click(object sender, EventArgs e)
+        private void label1_Click(object sender, EventArgs e)
         {
-            LogOutOperator();
-        }
-
-        private void CompareIdleTime()
-        {
-            while (true)
-            {
-                if (WinApi.GetIdleTime() > 2000)
-                {
-                    LogOutOperator();
-                    break;
-                }
-            }
+            WindowState = FormWindowState.Minimized;
         }
     }
 }
