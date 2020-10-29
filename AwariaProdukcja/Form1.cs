@@ -7,11 +7,16 @@ using Microsoft.Win32;
 using SQLLib;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace AwariaProdukcja
 {
     public partial class Form1 : Form
     {
+        string folderToMonitor = @"C:\Users\Public\Documents";
+        FileSystemWatcher fwatcher = new FileSystemWatcher();
+        FileOperations fo = new FileOperations();
         //used in form 2 and 3
         public string _tID { get; private set; }
         private List<string> technicians = new List<string>(){
@@ -26,6 +31,7 @@ namespace AwariaProdukcja
         public Form1()
         {
             InitializeComponent();
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -36,7 +42,8 @@ namespace AwariaProdukcja
             RunAtStartUp();
             lblTester.Text += Environment.MachineName;
             lblUser.Text += Environment.UserName;
-
+            MonitorFiles();
+            chartPareto.ChartAreas[0].AxisY.Enabled = AxisEnabled.False;
         }
 
         private void RunAtStartUp()
@@ -171,6 +178,48 @@ namespace AwariaProdukcja
         private void label1_Click(object sender, EventArgs e)
         {
             WindowState = FormWindowState.Minimized;
+        }
+
+        [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
+        private extern static void ReleaseCapture();
+        [DllImport("user32.DLL", EntryPoint = "SendMessage")]
+        private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
+
+        private void panelUser_MouseDown(object sender, MouseEventArgs e)
+        {
+            ReleaseCapture();
+            SendMessage(this.Handle, 0x112, 0xf012, 0);
+        }
+
+        private void chart1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MonitorFiles()
+        {
+            fwatcher.Filter = "*.xml*";
+            fwatcher.Path = folderToMonitor;
+            fwatcher.NotifyFilter = NotifyFilters.LastAccess
+                                 | NotifyFilters.LastWrite
+                                 | NotifyFilters.FileName
+                                 | NotifyFilters.DirectoryName;
+            fwatcher.Created += OnChanged;
+            fwatcher.EnableRaisingEvents = true;
+        }
+
+        private void OnChanged(object source, FileSystemEventArgs e) {
+            // Specify what is done when a file is changed, created, or deleted.
+
+            if (fo.CheckIfFolderExists(folderToMonitor))
+            {
+                string status = fo.GetFileStatus(e.FullPath, ".xml");
+                //MessageBox.Show($"File: {e.FullPath} {e.ChangeType}");
+            }
+            //Open File to check if its pass/fail
+            //Update FPY
+            //Store error code
+            //Update chart
         }
     }
 }

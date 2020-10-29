@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.lblTester = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
@@ -44,20 +46,16 @@
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.lblUser = new System.Windows.Forms.Label();
             this.panelUser = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
             this.panelButtons = new System.Windows.Forms.Panel();
             this.panelTimers = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.metroTabControl1 = new MetroFramework.Controls.MetroTabControl();
-            this.metroTabPage1 = new MetroFramework.Controls.MetroTabPage();
-            this.metroTabPage2 = new MetroFramework.Controls.MetroTabPage();
-            this.metroTextBox1 = new MetroFramework.Controls.MetroTextBox();
+            this.panelKPI = new System.Windows.Forms.Panel();
+            this.chartPareto = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.panelUser.SuspendLayout();
             this.panelButtons.SuspendLayout();
             this.panelTimers.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.metroTabControl1.SuspendLayout();
-            this.metroTabPage2.SuspendLayout();
+            this.panelKPI.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chartPareto)).BeginInit();
             this.SuspendLayout();
             // 
             // lblTester
@@ -230,6 +228,19 @@
             this.panelUser.Name = "panelUser";
             this.panelUser.Size = new System.Drawing.Size(228, 40);
             this.panelUser.TabIndex = 16;
+            this.panelUser.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelUser_MouseDown);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.label1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.label1.Location = new System.Drawing.Point(215, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(13, 13);
+            this.label1.TabIndex = 15;
+            this.label1.Text = "_";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // panelButtons
             // 
@@ -259,112 +270,41 @@
             this.panelTimers.Size = new System.Drawing.Size(228, 111);
             this.panelTimers.TabIndex = 18;
             // 
-            // label1
+            // panelKPI
             // 
-            this.label1.AutoSize = true;
-            this.label1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label1.Location = new System.Drawing.Point(215, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(13, 13);
-            this.label1.TabIndex = 15;
-            this.label1.Text = "_";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
+            this.panelKPI.Controls.Add(this.chartPareto);
+            this.panelKPI.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelKPI.Location = new System.Drawing.Point(0, 431);
+            this.panelKPI.Name = "panelKPI";
+            this.panelKPI.Size = new System.Drawing.Size(228, 102);
+            this.panelKPI.TabIndex = 19;
             // 
-            // panel1
+            // chartPareto
             // 
-            this.panel1.Controls.Add(this.metroTabControl1);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 478);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(228, 102);
-            this.panel1.TabIndex = 19;
-            // 
-            // metroTabControl1
-            // 
-            this.metroTabControl1.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
-            this.metroTabControl1.Controls.Add(this.metroTabPage1);
-            this.metroTabControl1.Controls.Add(this.metroTabPage2);
-            this.metroTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.metroTabControl1.Location = new System.Drawing.Point(0, 0);
-            this.metroTabControl1.Name = "metroTabControl1";
-            this.metroTabControl1.SelectedIndex = 1;
-            this.metroTabControl1.Size = new System.Drawing.Size(228, 102);
-            this.metroTabControl1.TabIndex = 0;
-            this.metroTabControl1.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.metroTabControl1.UseSelectable = true;
-            // 
-            // metroTabPage1
-            // 
-            this.metroTabPage1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.metroTabPage1.HorizontalScrollbarBarColor = true;
-            this.metroTabPage1.HorizontalScrollbarHighlightOnWheel = false;
-            this.metroTabPage1.HorizontalScrollbarSize = 5;
-            this.metroTabPage1.Location = new System.Drawing.Point(4, 41);
-            this.metroTabPage1.Name = "metroTabPage1";
-            this.metroTabPage1.Size = new System.Drawing.Size(220, 57);
-            this.metroTabPage1.Style = MetroFramework.MetroColorStyle.Black;
-            this.metroTabPage1.TabIndex = 0;
-            this.metroTabPage1.Text = "KPI";
-            this.metroTabPage1.VerticalScrollbarBarColor = true;
-            this.metroTabPage1.VerticalScrollbarHighlightOnWheel = false;
-            this.metroTabPage1.VerticalScrollbarSize = 10;
-            // 
-            // metroTabPage2
-            // 
-            this.metroTabPage2.Controls.Add(this.metroTextBox1);
-            this.metroTabPage2.HorizontalScrollbarBarColor = true;
-            this.metroTabPage2.HorizontalScrollbarHighlightOnWheel = false;
-            this.metroTabPage2.HorizontalScrollbarSize = 10;
-            this.metroTabPage2.Location = new System.Drawing.Point(4, 41);
-            this.metroTabPage2.Name = "metroTabPage2";
-            this.metroTabPage2.Size = new System.Drawing.Size(220, 57);
-            this.metroTabPage2.TabIndex = 1;
-            this.metroTabPage2.Text = "Ustawienia";
-            this.metroTabPage2.VerticalScrollbarBarColor = true;
-            this.metroTabPage2.VerticalScrollbarHighlightOnWheel = false;
-            this.metroTabPage2.VerticalScrollbarSize = 10;
-            // 
-            // metroTextBox1
-            // 
-            // 
-            // 
-            // 
-            this.metroTextBox1.CustomButton.Image = null;
-            this.metroTextBox1.CustomButton.Location = new System.Drawing.Point(183, 1);
-            this.metroTextBox1.CustomButton.Name = "";
-            this.metroTextBox1.CustomButton.Size = new System.Drawing.Size(21, 21);
-            this.metroTextBox1.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.metroTextBox1.CustomButton.TabIndex = 1;
-            this.metroTextBox1.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroTextBox1.CustomButton.UseSelectable = true;
-            this.metroTextBox1.CustomButton.Visible = false;
-            this.metroTextBox1.Lines = new string[] {
-        "Folder z logami"};
-            this.metroTextBox1.Location = new System.Drawing.Point(8, 26);
-            this.metroTextBox1.MaxLength = 32767;
-            this.metroTextBox1.Name = "metroTextBox1";
-            this.metroTextBox1.PasswordChar = '\0';
-            this.metroTextBox1.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.metroTextBox1.SelectedText = "";
-            this.metroTextBox1.SelectionLength = 0;
-            this.metroTextBox1.SelectionStart = 0;
-            this.metroTextBox1.ShortcutsEnabled = true;
-            this.metroTextBox1.Size = new System.Drawing.Size(205, 23);
-            this.metroTextBox1.TabIndex = 2;
-            this.metroTextBox1.Text = "Folder z logami";
-            this.metroTextBox1.UseSelectable = true;
-            this.metroTextBox1.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.metroTextBox1.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            this.chartPareto.BackColor = System.Drawing.Color.Black;
+            chartArea1.AlignmentOrientation = ((System.Windows.Forms.DataVisualization.Charting.AreaAlignmentOrientations)((System.Windows.Forms.DataVisualization.Charting.AreaAlignmentOrientations.Vertical | System.Windows.Forms.DataVisualization.Charting.AreaAlignmentOrientations.Horizontal)));
+            chartArea1.Name = "ChartArea1";
+            this.chartPareto.ChartAreas.Add(chartArea1);
+            this.chartPareto.Location = new System.Drawing.Point(0, 0);
+            this.chartPareto.Margin = new System.Windows.Forms.Padding(0);
+            this.chartPareto.Name = "chartPareto";
+            this.chartPareto.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Excel;
+            series1.ChartArea = "ChartArea1";
+            series1.Color = System.Drawing.Color.Blue;
+            series1.Name = "Series1";
+            this.chartPareto.Series.Add(series1);
+            this.chartPareto.Size = new System.Drawing.Size(219, 102);
+            this.chartPareto.TabIndex = 0;
+            this.chartPareto.Click += new System.EventHandler(this.chart1_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(228, 580);
+            this.ClientSize = new System.Drawing.Size(228, 533);
             this.ControlBox = false;
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.panelKPI);
             this.Controls.Add(this.panelTimers);
             this.Controls.Add(this.panelButtons);
             this.Controls.Add(this.panelUser);
@@ -384,9 +324,8 @@
             this.panelButtons.PerformLayout();
             this.panelTimers.ResumeLayout(false);
             this.panelTimers.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.metroTabControl1.ResumeLayout(false);
-            this.metroTabPage2.ResumeLayout(false);
+            this.panelKPI.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chartPareto)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -410,11 +349,8 @@
         private System.Windows.Forms.Panel panelButtons;
         private System.Windows.Forms.Panel panelTimers;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Panel panel1;
-        private MetroFramework.Controls.MetroTabControl metroTabControl1;
-        private MetroFramework.Controls.MetroTabPage metroTabPage1;
-        private MetroFramework.Controls.MetroTabPage metroTabPage2;
-        private MetroFramework.Controls.MetroTextBox metroTextBox1;
+        private System.Windows.Forms.Panel panelKPI;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartPareto;
     }
 }
 

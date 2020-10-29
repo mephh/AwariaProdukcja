@@ -58,10 +58,10 @@
     <ApplicationIcon>icons8-factory-breakdown-100.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>6EC9966D2C8E0177DE97E4944B741A420DDC0A90</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>E3349BCEA9906D65840A6F31E513DAB05A4AFF5A</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>AwariaProdukcja_1_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>AwariaProdukcja_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -92,6 +92,7 @@
       <HintPath>..\packages\System.Data.SQLite.Core.1.0.113.1\lib\net46\System.Data.SQLite.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -101,6 +102,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileOperations.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
