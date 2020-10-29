@@ -58,10 +58,10 @@
     <ApplicationIcon>icons8-factory-breakdown-100.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>E3349BCEA9906D65840A6F31E513DAB05A4AFF5A</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>7A05165AB49ABFD69B3F9E61B0B9A35B0E6C74FF</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>AwariaProdukcja_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>AwariaProdukcja_2_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -151,6 +151,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="AwariaProdukcja_1_TemporaryKey.pfx" />
+    <None Include="AwariaProdukcja_2_TemporaryKey.pfx" />
     <None Include="AwariaProdukcja_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

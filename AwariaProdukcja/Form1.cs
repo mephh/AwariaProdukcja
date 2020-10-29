@@ -43,7 +43,6 @@ namespace AwariaProdukcja
             lblTester.Text += Environment.MachineName;
             lblUser.Text += Environment.UserName;
             MonitorFiles();
-            chartPareto.ChartAreas[0].AxisY.Enabled = AxisEnabled.False;
         }
 
         private void RunAtStartUp()
@@ -74,10 +73,13 @@ namespace AwariaProdukcja
         private void button1_Click(object sender, EventArgs e)
         {
             //Start AWARIA
+            HideButtons();
+            buttonCancel.Visible = true;
+            buttonIntervention.Visible = true;
             _start = DateTime.Now;
-            label4.Text = _start.ToString(datetimeFormat);
-            label4.Visible = true;
-            button1.Visible = false; //hide awaria button so others are visible
+            lblStartTime.Text = _start.ToString(datetimeFormat);
+            lblStartTime.Visible = true;
+            //buttonRegisterIssue.Visible = false; //hide awaria button so others are visible
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -87,11 +89,23 @@ namespace AwariaProdukcja
 
         private void button3_Click(object sender, EventArgs e)
         {   //ROZPOCZNIJ INTERWENCJE
-            label6.Text = DateTime.Now.ToString(datetimeFormat);
-            label6.Visible = true;
-            textBox2.Visible = true;
-            button4.Visible = true;
-            comboBox1.Visible = true;
+            HideButtons();
+            lblStartInterv.Text = DateTime.Now.ToString(datetimeFormat);
+            lblStartInterv.Visible = true;
+            tboxDescr.Visible = true;
+            buttonCloseInterv.Visible = true;
+            cboxProblemType.Visible = true;
+        }
+
+        private void HideButtons()
+        {
+            foreach (Control control in panelButtons.Controls)
+            {
+                if (control.GetType() == typeof(Button))
+                {
+                    control.Visible = false;
+                }
+            }
         }
 
         private void label5_Click(object sender, EventArgs e)
@@ -101,22 +115,23 @@ namespace AwariaProdukcja
 
         private void ResetControls()
         {
-            button1.Visible = true;
-            button1.BringToFront();
-            label4.Text = "";
-            label6.Text = "";
-            label4.Visible = false;
-            label6.Visible = false;
-            textBox2.Text = "";
-            textBox2.Visible = false;
-            button4.Visible = false;
-            comboBox1.ResetText();
-            comboBox1.Visible = false;
+            HideButtons();
+            buttonRegisterIssue.Visible = true;
+            //buttonRegisterIssue.BringToFront();
+            lblStartTime.Text = "";
+            lblStartInterv.Text = "";
+            lblStartTime.Visible = false;
+            lblStartInterv.Visible = false;
+            tboxDescr.Text = "";
+            tboxDescr.Visible = false;
+            //buttonCloseInterv.Visible = false;
+            cboxProblemType.ResetText();
+            cboxProblemType.Visible = false;
         }
 
         private void button4_Click(object sender, EventArgs e)
         {   //ZAMKNIJ INTERWENCJE
-            if (textBox2.Text != "" && comboBox1.Text != "")
+            if (tboxDescr.Text != "" && cboxProblemType.Text != "")
             {
                 while (!technicians.Contains(_tID)){
                     AskForID(); //ASK FOR TECHNICIAN ID
@@ -127,12 +142,12 @@ namespace AwariaProdukcja
                     //build sql query 
                     ProblemModel pm = new ProblemModel();
                     pm.Tester = lblTester.Text.Substring(lblTester.Text.IndexOf(':'));
-                    pm.Start = label4.Text; //conv string
-                    pm.InterventionStart = label6.Text; //conv string
+                    pm.Start = lblStartTime.Text; //conv string
+                    pm.InterventionStart = lblStartInterv.Text; //conv string
                     pm.Stop = DateTime.Now.ToString(datetimeFormat); //conv string
                     pm.Downtime = DateTime.Now.Subtract(_start);
-                    pm.TypeOfIssue = comboBox1.Text;
-                    pm.RootCause = textBox2.Text;
+                    pm.TypeOfIssue = cboxProblemType.Text;
+                    pm.RootCause = tboxDescr.Text;
                     pm.technicianID = _tID;
                     pm.LoggedOperator = Environment.UserName;
                     try
@@ -219,7 +234,18 @@ namespace AwariaProdukcja
             //Open File to check if its pass/fail
             //Update FPY
             //Store error code
-            //Update chart
+            //Update listview
+        }
+
+        private void AddListViewItem(string defect)
+        {
+            ListViewItem item1 = new ListViewItem();
+            item1.SubItems.Add(defect);
+        }
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -28,34 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
+            ""}, -1, System.Drawing.Color.Empty, System.Drawing.SystemColors.MenuText, null);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.lblTester = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonRegisterIssue = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.buttonCancel = new System.Windows.Forms.Button();
+            this.buttonIntervention = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lblStartTime = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.lblStartInterv = new System.Windows.Forms.Label();
+            this.tboxDescr = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.button4 = new System.Windows.Forms.Button();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.buttonCloseInterv = new System.Windows.Forms.Button();
+            this.cboxProblemType = new System.Windows.Forms.ComboBox();
             this.lblUser = new System.Windows.Forms.Label();
             this.panelUser = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.panelButtons = new System.Windows.Forms.Panel();
             this.panelTimers = new System.Windows.Forms.Panel();
             this.panelKPI = new System.Windows.Forms.Panel();
-            this.chartPareto = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.listView1 = new System.Windows.Forms.ListView();
+            this.button1 = new System.Windows.Forms.Button();
             this.panelUser.SuspendLayout();
             this.panelButtons.SuspendLayout();
             this.panelTimers.SuspendLayout();
             this.panelKPI.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chartPareto)).BeginInit();
             this.SuspendLayout();
             // 
             // lblTester
@@ -68,17 +68,17 @@
             this.lblTester.TabIndex = 1;
             this.lblTester.Text = "Nazwa testera:";
             // 
-            // button1
+            // buttonRegisterIssue
             // 
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
-            this.button1.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.button1.Location = new System.Drawing.Point(11, 6);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(192, 83);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "AWARIA";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.buttonRegisterIssue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
+            this.buttonRegisterIssue.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.buttonRegisterIssue.Location = new System.Drawing.Point(11, 6);
+            this.buttonRegisterIssue.Name = "buttonRegisterIssue";
+            this.buttonRegisterIssue.Size = new System.Drawing.Size(192, 83);
+            this.buttonRegisterIssue.TabIndex = 2;
+            this.buttonRegisterIssue.Text = "ZGŁOŚ AWARIĘ";
+            this.buttonRegisterIssue.UseVisualStyleBackColor = false;
+            this.buttonRegisterIssue.Click += new System.EventHandler(this.button1_Click);
             // 
             // label2
             // 
@@ -90,28 +90,28 @@
             this.label2.TabIndex = 3;
             this.label2.Text = "Rodzaj problemu";
             // 
-            // button2
+            // buttonCancel
             // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button2.ForeColor = System.Drawing.Color.Black;
-            this.button2.Location = new System.Drawing.Point(11, 6);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(93, 83);
-            this.button2.TabIndex = 4;
-            this.button2.Text = "ANULUJ";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.buttonCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.buttonCancel.ForeColor = System.Drawing.Color.Black;
+            this.buttonCancel.Location = new System.Drawing.Point(11, 6);
+            this.buttonCancel.Name = "buttonCancel";
+            this.buttonCancel.Size = new System.Drawing.Size(93, 83);
+            this.buttonCancel.TabIndex = 4;
+            this.buttonCancel.Text = "ANULUJ";
+            this.buttonCancel.UseVisualStyleBackColor = true;
+            this.buttonCancel.Click += new System.EventHandler(this.button2_Click);
             // 
-            // button3
+            // buttonIntervention
             // 
-            this.button3.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.button3.Location = new System.Drawing.Point(110, 6);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(93, 83);
-            this.button3.TabIndex = 5;
-            this.button3.Text = "ROZPOCZNIJ INTERWENCJE";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.buttonIntervention.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.buttonIntervention.Location = new System.Drawing.Point(110, 6);
+            this.buttonIntervention.Name = "buttonIntervention";
+            this.buttonIntervention.Size = new System.Drawing.Size(93, 83);
+            this.buttonIntervention.TabIndex = 5;
+            this.buttonIntervention.Text = "ROZPOCZNIJ INTERWENCJE";
+            this.buttonIntervention.UseVisualStyleBackColor = true;
+            this.buttonIntervention.Click += new System.EventHandler(this.button3_Click);
             // 
             // label3
             // 
@@ -123,16 +123,16 @@
             this.label3.TabIndex = 6;
             this.label3.Text = "Czas rozpoczecia awarii:";
             // 
-            // label4
+            // lblStartTime
             // 
-            this.label4.AutoSize = true;
-            this.label4.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.label4.Location = new System.Drawing.Point(12, 27);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(35, 13);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "label4";
-            this.label4.Visible = false;
+            this.lblStartTime.AutoSize = true;
+            this.lblStartTime.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.lblStartTime.Location = new System.Drawing.Point(12, 27);
+            this.lblStartTime.Name = "lblStartTime";
+            this.lblStartTime.Size = new System.Drawing.Size(35, 13);
+            this.lblStartTime.TabIndex = 7;
+            this.lblStartTime.Text = "label4";
+            this.lblStartTime.Visible = false;
             // 
             // label5
             // 
@@ -145,25 +145,25 @@
             this.label5.Text = "Czas rozpoczecia interwencji:";
             this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
-            // label6
+            // lblStartInterv
             // 
-            this.label6.AutoSize = true;
-            this.label6.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.label6.Location = new System.Drawing.Point(12, 87);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(35, 13);
-            this.label6.TabIndex = 9;
-            this.label6.Text = "label6";
-            this.label6.Visible = false;
+            this.lblStartInterv.AutoSize = true;
+            this.lblStartInterv.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.lblStartInterv.Location = new System.Drawing.Point(12, 87);
+            this.lblStartInterv.Name = "lblStartInterv";
+            this.lblStartInterv.Size = new System.Drawing.Size(35, 13);
+            this.lblStartInterv.TabIndex = 9;
+            this.lblStartInterv.Text = "label6";
+            this.lblStartInterv.Visible = false;
             // 
-            // textBox2
+            // tboxDescr
             // 
-            this.textBox2.Location = new System.Drawing.Point(11, 164);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(189, 103);
-            this.textBox2.TabIndex = 10;
-            this.textBox2.Visible = false;
+            this.tboxDescr.Location = new System.Drawing.Point(11, 164);
+            this.tboxDescr.Multiline = true;
+            this.tboxDescr.Name = "tboxDescr";
+            this.tboxDescr.Size = new System.Drawing.Size(189, 103);
+            this.tboxDescr.TabIndex = 10;
+            this.tboxDescr.Visible = false;
             // 
             // label7
             // 
@@ -175,25 +175,25 @@
             this.label7.TabIndex = 11;
             this.label7.Text = "Opis problemu";
             // 
-            // button4
+            // buttonCloseInterv
             // 
-            this.button4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(57)))), ((int)(((byte)(43)))));
-            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button4.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.button4.Location = new System.Drawing.Point(11, 5);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(192, 83);
-            this.button4.TabIndex = 12;
-            this.button4.Text = "ZAKONCZ AWARIE";
-            this.button4.UseVisualStyleBackColor = false;
-            this.button4.Visible = false;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.buttonCloseInterv.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(57)))), ((int)(((byte)(43)))));
+            this.buttonCloseInterv.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.buttonCloseInterv.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.buttonCloseInterv.Location = new System.Drawing.Point(11, 5);
+            this.buttonCloseInterv.Name = "buttonCloseInterv";
+            this.buttonCloseInterv.Size = new System.Drawing.Size(192, 83);
+            this.buttonCloseInterv.TabIndex = 12;
+            this.buttonCloseInterv.Text = "ZAKONCZ AWARIE";
+            this.buttonCloseInterv.UseVisualStyleBackColor = false;
+            this.buttonCloseInterv.Visible = false;
+            this.buttonCloseInterv.Click += new System.EventHandler(this.button4_Click);
             // 
-            // comboBox1
+            // cboxProblemType
             // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.cboxProblemType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxProblemType.FormattingEnabled = true;
+            this.cboxProblemType.Items.AddRange(new object[] {
             "SOFTWARE",
             "ZASILACZE, MIERNIKI ITP.",
             "POLACZENIE Z SIECIA",
@@ -202,11 +202,11 @@
             "BLAD OPERATORA",
             "BRAK PROBLEMU",
             "USZKODZENIE ELEKTRYCZNE"});
-            this.comboBox1.Location = new System.Drawing.Point(11, 109);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(189, 21);
-            this.comboBox1.TabIndex = 13;
-            this.comboBox1.Visible = false;
+            this.cboxProblemType.Location = new System.Drawing.Point(11, 109);
+            this.cboxProblemType.Name = "cboxProblemType";
+            this.cboxProblemType.Size = new System.Drawing.Size(189, 21);
+            this.cboxProblemType.TabIndex = 13;
+            this.cboxProblemType.Visible = false;
             // 
             // lblUser
             // 
@@ -220,6 +220,7 @@
             // 
             // panelUser
             // 
+            this.panelUser.Controls.Add(this.button1);
             this.panelUser.Controls.Add(this.label1);
             this.panelUser.Controls.Add(this.lblTester);
             this.panelUser.Controls.Add(this.lblUser);
@@ -244,14 +245,14 @@
             // 
             // panelButtons
             // 
-            this.panelButtons.Controls.Add(this.button4);
-            this.panelButtons.Controls.Add(this.button1);
-            this.panelButtons.Controls.Add(this.comboBox1);
-            this.panelButtons.Controls.Add(this.button2);
+            this.panelButtons.Controls.Add(this.cboxProblemType);
+            this.panelButtons.Controls.Add(this.buttonCancel);
             this.panelButtons.Controls.Add(this.label7);
-            this.panelButtons.Controls.Add(this.button3);
-            this.panelButtons.Controls.Add(this.textBox2);
+            this.panelButtons.Controls.Add(this.buttonIntervention);
+            this.panelButtons.Controls.Add(this.tboxDescr);
             this.panelButtons.Controls.Add(this.label2);
+            this.panelButtons.Controls.Add(this.buttonRegisterIssue);
+            this.panelButtons.Controls.Add(this.buttonCloseInterv);
             this.panelButtons.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelButtons.Location = new System.Drawing.Point(0, 40);
             this.panelButtons.Name = "panelButtons";
@@ -261,9 +262,9 @@
             // panelTimers
             // 
             this.panelTimers.Controls.Add(this.label3);
-            this.panelTimers.Controls.Add(this.label4);
+            this.panelTimers.Controls.Add(this.lblStartTime);
             this.panelTimers.Controls.Add(this.label5);
-            this.panelTimers.Controls.Add(this.label6);
+            this.panelTimers.Controls.Add(this.lblStartInterv);
             this.panelTimers.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTimers.Location = new System.Drawing.Point(0, 318);
             this.panelTimers.Name = "panelTimers";
@@ -272,37 +273,45 @@
             // 
             // panelKPI
             // 
-            this.panelKPI.Controls.Add(this.chartPareto);
+            this.panelKPI.Controls.Add(this.listView1);
             this.panelKPI.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelKPI.Location = new System.Drawing.Point(0, 431);
+            this.panelKPI.Location = new System.Drawing.Point(0, 504);
             this.panelKPI.Name = "panelKPI";
             this.panelKPI.Size = new System.Drawing.Size(228, 102);
             this.panelKPI.TabIndex = 19;
             // 
-            // chartPareto
+            // listView1
             // 
-            this.chartPareto.BackColor = System.Drawing.Color.Black;
-            chartArea1.AlignmentOrientation = ((System.Windows.Forms.DataVisualization.Charting.AreaAlignmentOrientations)((System.Windows.Forms.DataVisualization.Charting.AreaAlignmentOrientations.Vertical | System.Windows.Forms.DataVisualization.Charting.AreaAlignmentOrientations.Horizontal)));
-            chartArea1.Name = "ChartArea1";
-            this.chartPareto.ChartAreas.Add(chartArea1);
-            this.chartPareto.Location = new System.Drawing.Point(0, 0);
-            this.chartPareto.Margin = new System.Windows.Forms.Padding(0);
-            this.chartPareto.Name = "chartPareto";
-            this.chartPareto.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Excel;
-            series1.ChartArea = "ChartArea1";
-            series1.Color = System.Drawing.Color.Blue;
-            series1.Name = "Series1";
-            this.chartPareto.Series.Add(series1);
-            this.chartPareto.Size = new System.Drawing.Size(219, 102);
-            this.chartPareto.TabIndex = 0;
-            this.chartPareto.Click += new System.EventHandler(this.chart1_Click);
+            this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listView1.HideSelection = false;
+            this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem1});
+            this.listView1.Location = new System.Drawing.Point(0, 0);
+            this.listView1.Name = "listView1";
+            this.listView1.Size = new System.Drawing.Size(228, 102);
+            this.listView1.TabIndex = 0;
+            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
+            this.button1.Location = new System.Drawing.Point(215, 27);
+            this.button1.Margin = new System.Windows.Forms.Padding(0);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(13, 13);
+            this.button1.TabIndex = 16;
+            this.button1.UseVisualStyleBackColor = false;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(228, 533);
+            this.ClientSize = new System.Drawing.Size(228, 606);
             this.ControlBox = false;
             this.Controls.Add(this.panelKPI);
             this.Controls.Add(this.panelTimers);
@@ -325,32 +334,32 @@
             this.panelTimers.ResumeLayout(false);
             this.panelTimers.PerformLayout();
             this.panelKPI.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.chartPareto)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
         private System.Windows.Forms.Label lblTester;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonRegisterIssue;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button buttonCancel;
+        private System.Windows.Forms.Button buttonIntervention;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lblStartTime;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Label lblStartInterv;
+        private System.Windows.Forms.TextBox tboxDescr;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Button buttonCloseInterv;
+        private System.Windows.Forms.ComboBox cboxProblemType;
         private System.Windows.Forms.Label lblUser;
         private System.Windows.Forms.Panel panelUser;
         private System.Windows.Forms.Panel panelButtons;
         private System.Windows.Forms.Panel panelTimers;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panelKPI;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chartPareto;
+        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.Button button1;
     }
 }
 
