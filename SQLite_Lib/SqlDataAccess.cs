@@ -34,5 +34,14 @@ namespace SQLLib
         {
             return ConfigurationManager.ConnectionStrings[id].ConnectionString;
         }
+
+        public static void UpdateRowSQL(StatusModel sm)
+        {
+            using (SqlConnection cnn = new System.Data.SqlClient.SqlConnection(LoadConnectionString()))
+            {
+                cnn.Open();
+                cnn.Execute("UPDATE ComputerNames (PC, Name, Status) values (@PC, @Name, @Status)", sm);
+            }
+        }
     }
 }

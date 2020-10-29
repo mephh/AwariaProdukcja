@@ -237,6 +237,8 @@ namespace AwariaProdukcja
             //Update listview
         }
 
+
+        //displaying pareto of problems
         private void AddListViewItem(string defect)
         {
             ListViewItem item1 = new ListViewItem();
@@ -247,5 +249,12 @@ namespace AwariaProdukcja
         {
 
         }
+        //setup timer on filewatcher
+        //check if pc name in database, if no ask to add new row in db
+        //on first log update status to working
+        //if timer >x time => check if buttonCloseInterv is visible, if not => update status to lack of prod, otherwise update to broken/not working
+
+
+
     }
 }
