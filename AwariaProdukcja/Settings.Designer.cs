@@ -39,9 +39,13 @@
             this.label2 = new System.Windows.Forms.Label();
             this.rbtnTXT = new System.Windows.Forms.RadioButton();
             this.button1 = new System.Windows.Forms.Button();
+            this.panelStation = new System.Windows.Forms.Panel();
+            this.tboxStation = new System.Windows.Forms.TextBox();
+            this.lblStationName = new System.Windows.Forms.Label();
             this.panelHeader.SuspendLayout();
             this.panelSettings.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.panelStation.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelHeader
@@ -85,7 +89,7 @@
             // lblPathToMonit
             // 
             this.lblPathToMonit.AutoSize = true;
-            this.lblPathToMonit.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.lblPathToMonit.ForeColor = System.Drawing.SystemColors.MenuHighlight;
             this.lblPathToMonit.Location = new System.Drawing.Point(9, 5);
             this.lblPathToMonit.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
             this.lblPathToMonit.Name = "lblPathToMonit";
@@ -95,16 +99,17 @@
             // 
             // panelSettings
             // 
+            this.panelSettings.Controls.Add(this.button1);
+            this.panelSettings.Controls.Add(this.panelStation);
             this.panelSettings.Controls.Add(this.panel1);
             this.panelSettings.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelSettings.Location = new System.Drawing.Point(0, 18);
             this.panelSettings.Name = "panelSettings";
-            this.panelSettings.Size = new System.Drawing.Size(228, 90);
+            this.panelSettings.Size = new System.Drawing.Size(228, 193);
             this.panelSettings.TabIndex = 1;
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.rbtnTXT);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.rbtnXML);
@@ -127,7 +132,7 @@
             // 
             this.rbtnXML.AutoSize = true;
             this.rbtnXML.Checked = true;
-            this.rbtnXML.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.rbtnXML.ForeColor = System.Drawing.SystemColors.MenuHighlight;
             this.rbtnXML.Location = new System.Drawing.Point(12, 71);
             this.rbtnXML.Name = "rbtnXML";
             this.rbtnXML.Size = new System.Drawing.Size(47, 17);
@@ -140,7 +145,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.label2.ForeColor = System.Drawing.SystemColors.MenuHighlight;
             this.label2.Location = new System.Drawing.Point(9, 46);
             this.label2.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
             this.label2.Name = "label2";
@@ -151,7 +156,7 @@
             // rbtnTXT
             // 
             this.rbtnTXT.AutoSize = true;
-            this.rbtnTXT.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.rbtnTXT.ForeColor = System.Drawing.SystemColors.MenuHighlight;
             this.rbtnTXT.Location = new System.Drawing.Point(65, 71);
             this.rbtnTXT.Name = "rbtnTXT";
             this.rbtnTXT.Size = new System.Drawing.Size(46, 17);
@@ -165,7 +170,7 @@
             this.button1.BackColor = System.Drawing.SystemColors.Highlight;
             this.button1.FlatAppearance.BorderSize = 0;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Location = new System.Drawing.Point(153, 65);
+            this.button1.Location = new System.Drawing.Point(153, 170);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 4;
@@ -173,12 +178,40 @@
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // panelStation
+            // 
+            this.panelStation.Controls.Add(this.tboxStation);
+            this.panelStation.Controls.Add(this.lblStationName);
+            this.panelStation.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelStation.Location = new System.Drawing.Point(0, 91);
+            this.panelStation.Name = "panelStation";
+            this.panelStation.Size = new System.Drawing.Size(228, 67);
+            this.panelStation.TabIndex = 4;
+            // 
+            // tboxStation
+            // 
+            this.tboxStation.Location = new System.Drawing.Point(12, 21);
+            this.tboxStation.Name = "tboxStation";
+            this.tboxStation.Size = new System.Drawing.Size(204, 20);
+            this.tboxStation.TabIndex = 5;
+            // 
+            // lblStationName
+            // 
+            this.lblStationName.AutoSize = true;
+            this.lblStationName.ForeColor = System.Drawing.SystemColors.MenuHighlight;
+            this.lblStationName.Location = new System.Drawing.Point(9, 5);
+            this.lblStationName.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.lblStationName.Name = "lblStationName";
+            this.lblStationName.Size = new System.Drawing.Size(99, 13);
+            this.lblStationName.TabIndex = 4;
+            this.lblStationName.Text = "Nazwa stanowiska:";
+            // 
             // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ClientSize = new System.Drawing.Size(228, 108);
+            this.ClientSize = new System.Drawing.Size(228, 211);
             this.Controls.Add(this.panelSettings);
             this.Controls.Add(this.panelHeader);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -191,6 +224,8 @@
             this.panelSettings.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.panelStation.ResumeLayout(false);
+            this.panelStation.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -208,5 +243,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.RadioButton rbtnXML;
         private System.Windows.Forms.TextBox tboxPath;
+        private System.Windows.Forms.Panel panelStation;
+        private System.Windows.Forms.TextBox tboxStation;
+        private System.Windows.Forms.Label lblStationName;
     }
 }

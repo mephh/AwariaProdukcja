@@ -101,6 +101,8 @@ namespace AwariaProdukcja
                 }
                 string[] lines = File.ReadAllLines(filename);
                 List<string> logList = new List<string>(lines);
+
+                //PLACEHOLDER, TXT NOT FULLY DEFINED
                 if (ext == ".txt")
                 {
                     if (lines[lines.Length - 1].Contains("FAILED"))
@@ -111,7 +113,7 @@ namespace AwariaProdukcja
                     {
                         return "PASS";
                     }
-                }
+                } //END OF PLACEHOLDER
                 else if (ext == ".xml")
                 {
                     for (int i = 0; i < logList.Count; i++)
@@ -122,7 +124,6 @@ namespace AwariaProdukcja
                             int stop = logList[i].IndexOf("sequence") - 2;
                             int stepNameLength = stop - start;
                             string result = logList[i].Substring(start, stepNameLength);
-
                             return result;
                         }
                     }

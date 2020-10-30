@@ -23,7 +23,7 @@ namespace SQLLib
         
         public static void SaveProblemSQL(ProblemModel problem)
         {
-            using (SqlConnection cnn = new System.Data.SqlClient.SqlConnection(LoadConnectionString()))
+            using (SqlConnection cnn = new SqlConnection(LoadConnectionString()))
             {
                 cnn.Open();
                 cnn.Execute("INSERT into Testers(Tester, Start, InterventionStart, Stop, Downtime, TypeOfIssue, RootCause, Technician) values (@Tester, @Start, @InterventionSTart, @Stop, @Downtime, @TypeOfIssue, @RootCause, @TechnicianID)", problem);
@@ -37,11 +37,38 @@ namespace SQLLib
 
         public static void UpdateRowSQL(StatusModel sm)
         {
-            using (SqlConnection cnn = new System.Data.SqlClient.SqlConnection(LoadConnectionString()))
+            using (SqlConnection cnn = new SqlConnection(LoadConnectionString()))
             {
                 cnn.Open();
-                cnn.Execute("UPDATE ComputerNames (PC, Name, Status) values (@PC, @Name, @Status)", sm);
+                //cnn.Execute("UPDATE ComputerNames (PC, Name, Status) values (@PC, @Name, @Status)", sm);
+                cnn.Execute("IF EXISTS(SELECT * FROM ComputerNames WHERE PC = @PC)" +
+                    "                  UPDATE ComputerNames SET Status = @Status, Name = @Name where PC = @PC;" +
+                    "        ELSE" +
+                    "        INSERT ComputerNames(PC, Name, Status)" +
+                    "        VALUES(@PC, @Name, @Status);", sm);
             }
         }
+
+        string upsertCommand = @"CREATE PROCEDURE s_AccountDetails_Upsert ( @Email nvarchar(4000), @Etc nvarchar(max) )
+                                AS
+                                SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+                                BEGIN TRAN
+
+
+                                IF EXISTS(SELECT* FROM dbo.AccountDetails WITH (UPDLOCK) WHERE Email = @Email)
+
+
+                                 UPDATE dbo.AccountDetails
+                                 SET Etc = @Etc
+                                 WHERE Email = @Email;
+
+                                ELSE
+
+                                 INSERT dbo.AccountDetails(Email, Etc)
+                                 VALUES(@Email, @Etc );
+
+                                COMMIT";
+
+
     }
 }

@@ -27,7 +27,9 @@ namespace AwariaProdukcja
     public partial class Form1 : Form
     {
         //INITIALIZE WATCHER FOR LOGFILES DIRECTORY
-        string folderToMonitor = @"C:\Users\Public\Documents";
+        private string FolderToMonitor { get; set; }
+        private string Ext { get; set; }
+        private string StationName { get; set; }
         FileSystemWatcher fwatcher = new FileSystemWatcher();
         FileOperations fo = new FileOperations();
         //used in form 2 and 3
@@ -40,6 +42,8 @@ namespace AwariaProdukcja
 
         public string errorFilePath { get { return @"C:\Users\Public\Documents\AwariaProd_Errors.txt"; } }
         private string datetimeFormat = "yyyy-MM-dd HH:mm:ss"; //must be done cause of different date formats on stations
+        private bool timerEnabled;
+        private Timer timer;
 
         public Form1()
         {
@@ -54,7 +58,21 @@ namespace AwariaProdukcja
             RunAtStartUp();
             lblTester.Text += Environment.MachineName;
             lblUser.Text += Environment.UserName;
+            FolderToMonitor = FileOperations.ReadSetting("PathToMonitor");
+            StationName = FileOperations.ReadSetting("StationName");
+            while (FolderToMonitor == null || StationName == null)
+            {
+                btnSettings.PerformClick();
+                FolderToMonitor = FileOperations.ReadSetting("PathToMonitor");
+                Ext = FileOperations.ReadSetting("LogFormat");
+                StationName = FileOperations.ReadSetting("StationName");
+            }
             MonitorFiles();
+            StartTimer();
+            StatusModel sm = new StatusModel() { PC = Environment.MachineName, Name = StationName, Status = "Nie pracuje" };
+            SqlDataAccess.UpdateRowSQL(sm);
+            //update db nie pracuje
+            
         }
 
         private void RunAtStartUp()
@@ -137,8 +155,8 @@ namespace AwariaProdukcja
 
         private void MonitorFiles()
         {
-            fwatcher.Filter = "*.xml*";
-            fwatcher.Path = folderToMonitor;
+            fwatcher.Filter = Ext;
+            fwatcher.Path = FolderToMonitor;
             fwatcher.NotifyFilter = NotifyFilters.LastAccess
                                  | NotifyFilters.LastWrite
                                  | NotifyFilters.FileName
@@ -146,11 +164,6 @@ namespace AwariaProdukcja
             fwatcher.Created += OnChanged;
             fwatcher.EnableRaisingEvents = true;
         }
-
-
-
-
-
 
         //EVENTS
         private void button1_Click(object sender, EventArgs e)
@@ -234,14 +247,15 @@ namespace AwariaProdukcja
 
         private void OnChanged(object source, FileSystemEventArgs e)
         {
+            StopTimer();
+            StartTimer();
             // Specify what is done when a file is changed, created, or deleted.
 
-            if (fo.CheckIfFolderExists(folderToMonitor))
-            {
-                string status = fo.GetFileStatus(e.FullPath, ".xml");
-                //MessageBox.Show($"File: {e.FullPath} {e.ChangeType}");
-            }
-
+            //if (fo.CheckIfFolderExists(FolderToMonitor))
+            //{
+            //    string status = fo.GetFileStatus(e.FullPath, Ext);
+            //    //MessageBox.Show($"File: {e.FullPath} {e.ChangeType}");
+            //}
         }
 
         private void btnSettings_Click(object sender, EventArgs e)
@@ -249,6 +263,38 @@ namespace AwariaProdukcja
             Settings settingsForm = new Settings();
             settingsForm.StartPosition = FormStartPosition.Manual;
             settingsForm.Show();
+        }
+
+        //TIMERS
+        void Timer_Tick(object sender, EventArgs e)
+        {
+            StopTimer();
+        }
+
+        public void StartTimer()
+        {
+            if (!timerEnabled)
+            {
+                timer = new Timer();
+                timer.Interval = 6000;
+                timer.Tick += Timer_Tick;
+                timer.Start();
+                timerEnabled = true;
+            }
+        }
+
+        public void StopTimer()
+        {
+            timer.Stop();
+            timerEnabled = false;
+            if (!buttonRegisterIssue.Visible)
+            {
+                //updatedb awaria
+            }
+            else
+            {
+                //updatedb pracuje
+            }
         }
     }
 }

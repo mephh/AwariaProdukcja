@@ -20,6 +20,7 @@ namespace AwariaProdukcja
         {
             InitializeComponent();
             tboxPath.Text = FileOperations.ReadSetting("PathToMonitor");
+            tboxStation.Text = FileOperations.ReadSetting("StationName");
         }
 
         [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
@@ -41,6 +42,7 @@ namespace AwariaProdukcja
                 {
                     FileOperations.AddUpdateAppSetting("PathToMonitor", tboxPath.Text);
                     FileOperations.AddUpdateAppSetting("LogFormat", LogFormat);
+                    FileOperations.AddUpdateAppSetting("StationName", tboxStation.Text);
                     Close();
                 }
             }
@@ -50,7 +52,7 @@ namespace AwariaProdukcja
         {
             if (rbtnXML.Checked)
             {
-                LogFormat = "XML";
+                LogFormat = "*.xml";
             }
         }
 
@@ -58,7 +60,7 @@ namespace AwariaProdukcja
         {
             if (rbtnTXT.Checked)
             {
-                LogFormat = "TXT";
+                LogFormat = "*.txt";
             }
         }
 
