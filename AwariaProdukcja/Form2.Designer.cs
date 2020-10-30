@@ -76,6 +76,7 @@
             this.Name = "Form2";
             this.Text = "Kto zamyka awarię?";
             this.TopMost = true;
+            this.Load += new System.EventHandler(this.Form2_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

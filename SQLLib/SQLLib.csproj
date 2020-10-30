@@ -7,8 +7,8 @@
     <ProjectGuid>{B04D8BB8-FEDB-43DD-B623-AD622B139FF4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SQLite_Lib</RootNamespace>
-    <AssemblyName>SQLite_Lib</AssemblyName>
+    <RootNamespace>SQLLib</RootNamespace>
+    <AssemblyName>SQLLib</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

@@ -41,5 +41,10 @@ namespace AwariaProdukcja
                 button1_Click(this, new EventArgs());
             }
         }
+
+        private void Form2_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

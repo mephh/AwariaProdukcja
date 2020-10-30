@@ -58,10 +58,10 @@
     <ApplicationIcon>icons8-factory-breakdown-100.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>7A05165AB49ABFD69B3F9E61B0B9A35B0E6C74FF</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>E3349BCEA9906D65840A6F31E513DAB05A4AFF5A</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>AwariaProdukcja_2_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>AwariaProdukcja_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -115,24 +115,14 @@
     <Compile Include="Form2.Designer.cs">
       <DependentUpon>Form2.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form3.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form3.Designer.cs">
-      <DependentUpon>Form3.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WinApi.cs" />
     <Content Include="icons8-factory-breakdown-100.ico" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form2.resx">
       <DependentUpon>Form2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form3.resx">
-      <DependentUpon>Form3.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -165,7 +155,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SQLite_Lib\SQLLib.csproj">
+    <ProjectReference Include="..\SQLLib\SQLLib.csproj">
       <Project>{b04d8bb8-fedb-43dd-b623-ad622b139ff4}</Project>
       <Name>SQLLib</Name>
     </ProjectReference>
