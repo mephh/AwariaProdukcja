@@ -28,8 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
-            ""}, -1, System.Drawing.Color.Empty, System.Drawing.SystemColors.MenuText, null);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.lblTester = new System.Windows.Forms.Label();
             this.buttonRegisterIssue = new System.Windows.Forms.Button();
@@ -46,16 +44,14 @@
             this.cboxProblemType = new System.Windows.Forms.ComboBox();
             this.lblUser = new System.Windows.Forms.Label();
             this.panelUser = new System.Windows.Forms.Panel();
+            this.btnSettings = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.panelButtons = new System.Windows.Forms.Panel();
             this.panelTimers = new System.Windows.Forms.Panel();
             this.panelKPI = new System.Windows.Forms.Panel();
-            this.listView1 = new System.Windows.Forms.ListView();
-            this.button1 = new System.Windows.Forms.Button();
             this.panelUser.SuspendLayout();
             this.panelButtons.SuspendLayout();
             this.panelTimers.SuspendLayout();
-            this.panelKPI.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblTester
@@ -143,7 +139,6 @@
             this.label5.Size = new System.Drawing.Size(146, 13);
             this.label5.TabIndex = 8;
             this.label5.Text = "Czas rozpoczecia interwencji:";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // lblStartInterv
             // 
@@ -220,7 +215,7 @@
             // 
             // panelUser
             // 
-            this.panelUser.Controls.Add(this.button1);
+            this.panelUser.Controls.Add(this.btnSettings);
             this.panelUser.Controls.Add(this.label1);
             this.panelUser.Controls.Add(this.lblTester);
             this.panelUser.Controls.Add(this.lblUser);
@@ -230,6 +225,20 @@
             this.panelUser.Size = new System.Drawing.Size(228, 40);
             this.panelUser.TabIndex = 16;
             this.panelUser.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelUser_MouseDown);
+            // 
+            // btnSettings
+            // 
+            this.btnSettings.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btnSettings.FlatAppearance.BorderSize = 0;
+            this.btnSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSettings.Image = ((System.Drawing.Image)(resources.GetObject("btnSettings.Image")));
+            this.btnSettings.Location = new System.Drawing.Point(215, 27);
+            this.btnSettings.Margin = new System.Windows.Forms.Padding(0);
+            this.btnSettings.Name = "btnSettings";
+            this.btnSettings.Size = new System.Drawing.Size(13, 13);
+            this.btnSettings.TabIndex = 16;
+            this.btnSettings.UseVisualStyleBackColor = false;
+            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
             // 
             // label1
             // 
@@ -273,45 +282,18 @@
             // 
             // panelKPI
             // 
-            this.panelKPI.Controls.Add(this.listView1);
             this.panelKPI.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelKPI.Location = new System.Drawing.Point(0, 504);
+            this.panelKPI.Location = new System.Drawing.Point(0, 430);
             this.panelKPI.Name = "panelKPI";
             this.panelKPI.Size = new System.Drawing.Size(228, 102);
             this.panelKPI.TabIndex = 19;
-            // 
-            // listView1
-            // 
-            this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listView1.HideSelection = false;
-            this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1});
-            this.listView1.Location = new System.Drawing.Point(0, 0);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(228, 102);
-            this.listView1.TabIndex = 0;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
-            // 
-            // button1
-            // 
-            this.button1.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
-            this.button1.Location = new System.Drawing.Point(215, 27);
-            this.button1.Margin = new System.Windows.Forms.Padding(0);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(13, 13);
-            this.button1.TabIndex = 16;
-            this.button1.UseVisualStyleBackColor = false;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(228, 606);
+            this.ClientSize = new System.Drawing.Size(228, 532);
             this.ControlBox = false;
             this.Controls.Add(this.panelKPI);
             this.Controls.Add(this.panelTimers);
@@ -333,7 +315,6 @@
             this.panelButtons.PerformLayout();
             this.panelTimers.ResumeLayout(false);
             this.panelTimers.PerformLayout();
-            this.panelKPI.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -358,8 +339,7 @@
         private System.Windows.Forms.Panel panelTimers;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panelKPI;
-        private System.Windows.Forms.ListView listView1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnSettings;
     }
 }
 

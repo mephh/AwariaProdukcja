@@ -10,10 +10,23 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Windows.Forms.DataVisualization.Charting;
 
+//TODO
+//displaying pareto of problems
+//setup timer on filewatcher
+//check if pc name in database, if no ask to add new row in db
+//on first log update status to working
+//if timer >x time => check if buttonCloseInterv is visible, if not => update status to lack of prod, otherwise update to broken/not working
+//Open File to check if its pass/fail
+//Update FPY
+//Store error code
+//Update listview
+
+
 namespace AwariaProdukcja
 {
     public partial class Form1 : Form
     {
+        //INITIALIZE WATCHER FOR LOGFILES DIRECTORY
         string folderToMonitor = @"C:\Users\Public\Documents";
         FileSystemWatcher fwatcher = new FileSystemWatcher();
         FileOperations fo = new FileOperations();
@@ -31,7 +44,6 @@ namespace AwariaProdukcja
         public Form1()
         {
             InitializeComponent();
-
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -70,6 +82,77 @@ namespace AwariaProdukcja
             }
         }
 
+        private void HideButtons()
+        {
+            foreach (Control control in panelButtons.Controls)
+            {
+                if (control.GetType() == typeof(Button))
+                {
+                    control.Visible = false;
+                }
+            }
+        }
+
+        private void ResetControls()
+        {
+            HideButtons();
+            buttonRegisterIssue.Visible = true;
+            //buttonRegisterIssue.BringToFront();
+            lblStartTime.Text = "";
+            lblStartInterv.Text = "";
+            lblStartTime.Visible = false;
+            lblStartInterv.Visible = false;
+            tboxDescr.Text = "";
+            tboxDescr.Visible = false;
+            //buttonCloseInterv.Visible = false;
+            cboxProblemType.ResetText();
+            cboxProblemType.Visible = false;
+        }
+
+        public void AskForID()
+        {
+            Form2 testDialog = new Form2();
+            testDialog.StartPosition = FormStartPosition.CenterParent;
+            // Show testDialog as a modal dialog and determine if DialogResult = OK.
+            if (testDialog.ShowDialog() == DialogResult.OK)
+            {
+                _tID = Form2.UserID;
+            }
+            else
+            {
+                _tID = null;
+            }
+            testDialog.Dispose();
+        }
+
+        public void Error2txt(string errorFile, string errorCode)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("Tester: " + Environment.MachineName + ", Czas wystapienia:" + DateTime.Now + ", Blad wykonywania funkcji" + this.ToString() + ", Kod bledu: " + errorCode);
+            using (StreamWriter sw = new StreamWriter(errorFile, true))
+            {
+                sw.WriteLine(sb);
+            }
+        }
+
+        private void MonitorFiles()
+        {
+            fwatcher.Filter = "*.xml*";
+            fwatcher.Path = folderToMonitor;
+            fwatcher.NotifyFilter = NotifyFilters.LastAccess
+                                 | NotifyFilters.LastWrite
+                                 | NotifyFilters.FileName
+                                 | NotifyFilters.DirectoryName;
+            fwatcher.Created += OnChanged;
+            fwatcher.EnableRaisingEvents = true;
+        }
+
+
+
+
+
+
+        //EVENTS
         private void button1_Click(object sender, EventArgs e)
         {
             //Start AWARIA
@@ -97,43 +180,12 @@ namespace AwariaProdukcja
             cboxProblemType.Visible = true;
         }
 
-        private void HideButtons()
-        {
-            foreach (Control control in panelButtons.Controls)
-            {
-                if (control.GetType() == typeof(Button))
-                {
-                    control.Visible = false;
-                }
-            }
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-            //nuffin
-        }
-
-        private void ResetControls()
-        {
-            HideButtons();
-            buttonRegisterIssue.Visible = true;
-            //buttonRegisterIssue.BringToFront();
-            lblStartTime.Text = "";
-            lblStartInterv.Text = "";
-            lblStartTime.Visible = false;
-            lblStartInterv.Visible = false;
-            tboxDescr.Text = "";
-            tboxDescr.Visible = false;
-            //buttonCloseInterv.Visible = false;
-            cboxProblemType.ResetText();
-            cboxProblemType.Visible = false;
-        }
-
         private void button4_Click(object sender, EventArgs e)
         {   //ZAMKNIJ INTERWENCJE
             if (tboxDescr.Text != "" && cboxProblemType.Text != "")
             {
-                while (!technicians.Contains(_tID)){
+                while (!technicians.Contains(_tID))
+                {
                     AskForID(); //ASK FOR TECHNICIAN ID
                 }
                 Debug.Assert(_tID != null);
@@ -164,32 +216,6 @@ namespace AwariaProdukcja
             }
         }
 
-        public void AskForID()
-        {
-            Form2 testDialog = new Form2();
-            testDialog.StartPosition = FormStartPosition.CenterParent;
-            // Show testDialog as a modal dialog and determine if DialogResult = OK.
-            if (testDialog.ShowDialog() == DialogResult.OK)
-            {
-                _tID = Form2.UserID;
-            }
-            else
-            {
-                _tID = null;
-            }
-            testDialog.Dispose();
-        }
-
-        public void Error2txt(string errorFile, string errorCode)
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("Tester: " + Environment.MachineName + ", Czas wystapienia:" + DateTime.Now + ", Blad wykonywania funkcji" + this.ToString() + ", Kod bledu: " + errorCode);
-            using (StreamWriter sw = new StreamWriter(errorFile, true))
-            {
-                sw.WriteLine(sb);
-            }
-        }
-
         private void label1_Click(object sender, EventArgs e)
         {
             WindowState = FormWindowState.Minimized;
@@ -206,24 +232,8 @@ namespace AwariaProdukcja
             SendMessage(this.Handle, 0x112, 0xf012, 0);
         }
 
-        private void chart1_Click(object sender, EventArgs e)
+        private void OnChanged(object source, FileSystemEventArgs e)
         {
-
-        }
-
-        private void MonitorFiles()
-        {
-            fwatcher.Filter = "*.xml*";
-            fwatcher.Path = folderToMonitor;
-            fwatcher.NotifyFilter = NotifyFilters.LastAccess
-                                 | NotifyFilters.LastWrite
-                                 | NotifyFilters.FileName
-                                 | NotifyFilters.DirectoryName;
-            fwatcher.Created += OnChanged;
-            fwatcher.EnableRaisingEvents = true;
-        }
-
-        private void OnChanged(object source, FileSystemEventArgs e) {
             // Specify what is done when a file is changed, created, or deleted.
 
             if (fo.CheckIfFolderExists(folderToMonitor))
@@ -231,30 +241,14 @@ namespace AwariaProdukcja
                 string status = fo.GetFileStatus(e.FullPath, ".xml");
                 //MessageBox.Show($"File: {e.FullPath} {e.ChangeType}");
             }
-            //Open File to check if its pass/fail
-            //Update FPY
-            //Store error code
-            //Update listview
+
         }
 
-
-        //displaying pareto of problems
-        private void AddListViewItem(string defect)
+        private void btnSettings_Click(object sender, EventArgs e)
         {
-            ListViewItem item1 = new ListViewItem();
-            item1.SubItems.Add(defect);
+            Settings settingsForm = new Settings();
+            settingsForm.StartPosition = FormStartPosition.Manual;
+            settingsForm.Show();
         }
-
-        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-        //setup timer on filewatcher
-        //check if pc name in database, if no ask to add new row in db
-        //on first log update status to working
-        //if timer >x time => check if buttonCloseInterv is visible, if not => update status to lack of prod, otherwise update to broken/not working
-
-
-
     }
 }
