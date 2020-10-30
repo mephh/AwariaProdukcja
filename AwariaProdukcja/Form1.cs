@@ -29,10 +29,10 @@ namespace AwariaProdukcja
         //INITIALIZE WATCHER FOR LOGFILES DIRECTORY
         private string FolderToMonitor { get; set; }
         private string Ext { get; set; }
-        private string StationName { get; set; }
+        private static string StationName = FileOperations.ReadSetting("StationName");
         FileSystemWatcher fwatcher = new FileSystemWatcher();
         FileOperations fo = new FileOperations();
-        //used in form 2 and 3
+        //used in form 2
         public string _tID { get; private set; }
         private List<string> technicians = new List<string>(){
             "123", "1234", "1015"
@@ -44,6 +44,8 @@ namespace AwariaProdukcja
         private string datetimeFormat = "yyyy-MM-dd HH:mm:ss"; //must be done cause of different date formats on stations
         private bool timerEnabled;
         private Timer timer;
+        private static string status = "Brak produkcji";
+        StatusModel sm = new StatusModel() { PC = Environment.MachineName, Name = StationName, Status = status };
 
         public Form1()
         {
@@ -69,7 +71,7 @@ namespace AwariaProdukcja
             }
             MonitorFiles();
             StartTimer();
-            StatusModel sm = new StatusModel() { PC = Environment.MachineName, Name = StationName, Status = "Nie pracuje" };
+
             SqlDataAccess.UpdateRowSQL(sm);
             //update db nie pracuje
             
@@ -276,7 +278,7 @@ namespace AwariaProdukcja
             if (!timerEnabled)
             {
                 timer = new Timer();
-                timer.Interval = 6000;
+                timer.Interval = 600000;
                 timer.Tick += Timer_Tick;
                 timer.Start();
                 timerEnabled = true;
@@ -289,12 +291,13 @@ namespace AwariaProdukcja
             timerEnabled = false;
             if (!buttonRegisterIssue.Visible)
             {
-                //updatedb awaria
+                sm.Status = "Awaria";
             }
             else
             {
-                //updatedb pracuje
+                sm.Status = "Produkcja";//updatedb pracuje
             }
+            SqlDataAccess.UpdateRowSQL(sm);
         }
     }
 }
